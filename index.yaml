@@ -3,7 +3,7 @@ entries:
   devseccops-stack:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-20T15:54:54.353375+05:30"
+    created: "2026-05-20T16:49:59.67437+05:30"
     dependencies:
     - name: devseccops-fe-v2
       repository: file://../devseccops-fe-v2
@@ -19,10 +19,10 @@ entries:
       version: 0.1.0
     description: Umbrella chart for the full DevSecOps platform (fe-v2, be, be-go,
       repo-analyzer)
-    digest: fce1a754fab8bbf080f7cb3805f38d3e5b808df636e429c606b84c37ab5d114f
+    digest: 3d3495cd73321bc7a24c8571b36a969e3cc77069048c62dea56c6d77c070cee6
     name: devseccops-stack
     type: application
     urls:
     - https://manpreetsinghdevseccops.github.io/devseccops-stack/devseccops-stack-0.1.0.tgz
     version: 0.1.0
-generated: "2026-05-20T15:54:54.349264+05:30"
+generated: "2026-05-20T16:49:59.672083+05:30"

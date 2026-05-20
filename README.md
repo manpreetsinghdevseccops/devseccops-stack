@@ -3,6 +3,9 @@
 
 # Commands to make chart
 
+helm dependency build devseccops-stack/
+
+
 helm package devseccops-stack/
 helm repo index . --url https://manpreetsinghdevseccops.github.io/devseccops-stack
 
@@ -17,3 +20,17 @@ helm repo add devseccops https://manpreetsinghdevseccops.github.io/devseccops-st
 
 helm repo update
 helm upgrade --install devseccops devseccops/devseccops-stack -n devseccops
+
+
+
+terraform apply \
+    -var="aws_account_id=111122223333" \
+    -var="region=us-east-1" \
+    -var="cluster_name=client-eks-cluster" \
+    -var="prefix=clienta" \
+    -var="namespace=clienta-devseccops-namespace"
+
+
+
+
+ bash <(curl -fsSL https://devseccops-assets.s3.ap-south-1.amazonaws.com/setup-iam.sh) --cluster prod-devseccops-eks-cluster --prefix prod --namespace devseccops --region ap-south-1
