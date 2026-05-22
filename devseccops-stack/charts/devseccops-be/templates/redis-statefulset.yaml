@@ -1,0 +1,70 @@
+{{- if .Values.redis.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: be-redis
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "my-service.labels" . | nindent 4 }}
+    component: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: be-redis
+  serviceName: be-redis-service
+  template:
+    metadata:
+      labels:
+        app: be-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:{{ .Values.redis.tag }}
+        imagePullPolicy: IfNotPresent
+        command:
+        - redis-server
+        - --appendonly
+        - "yes"
+        - --maxmemory
+        - {{ .Values.redis.maxmemory }}
+        - --maxmemory-policy
+        - {{ .Values.redis.maxmemoryPolicy }}
+        ports:
+        - containerPort: 6379
+          name: redis
+          protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        resources:
+          {{- toYaml .Values.redis.resources | nindent 10 }}
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: {{ .Values.redis.storageClassName }}
+      resources:
+        requests:
+          storage: {{ .Values.redis.storage | quote }}
+{{- end }}
