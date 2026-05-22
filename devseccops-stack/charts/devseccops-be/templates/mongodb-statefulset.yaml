@@ -1,0 +1,80 @@
+{{- if .Values.mongodb.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "my-service.labels" . | nindent 4 }}
+    component: mongodb
+spec:
+  replicas: {{ .Values.mongodb.replicaCount }}
+  selector:
+    matchLabels:
+      app: mongo
+  serviceName: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:{{ .Values.mongodb.tag }}
+        imagePullPolicy: IfNotPresent
+        command:
+        - mongod
+        - --config
+        - /etc/mongo/mongodb.conf
+        - --bind_ip_all
+        ports:
+        - containerPort: 27017
+          name: mongo
+          protocol: TCP
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: {{ .Values.mongodb.auth.username | quote }}
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: {{ .Values.mongodb.auth.password | quote }}
+        livenessProbe:
+          exec:
+            command:
+            - mongosh
+            - --eval
+            - "db.adminCommand('ping')"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - mongosh
+            - --eval
+            - "db.adminCommand('ping')"
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        resources:
+          {{- toYaml .Values.mongodb.resources | nindent 10 }}
+        volumeMounts:
+        - name: mongo-data
+          mountPath: /data/db
+        - name: mongo-config
+          mountPath: /etc/mongo
+      volumes:
+      - name: mongo-config
+        configMap:
+          name: mongodb-config
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: {{ .Values.mongodb.storageClassName }}
+      resources:
+        requests:
+          storage: {{ .Values.mongodb.storage | quote }}
+{{- end }}

@@ -19,8 +19,10 @@ helm uninstall devseccops -n devseccops
 helm repo add devseccops https://manpreetsinghdevseccops.github.io/devseccops-stack/
 
 helm repo update
-helm upgrade --install devseccops devseccops/devseccops-stack -n devseccops
+helm upgrade --install devseccops devseccops/devseccops-stack -n devseccops --create-namespace devseccops
 
+
+helm install devseccops-stack ./devseccops-stack-*.tgz -n devseccops
 
 
 terraform apply \
