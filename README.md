@@ -34,3 +34,8 @@ terraform apply \
 
 
  bash <(curl -fsSL https://devseccops-assets.s3.ap-south-1.amazonaws.com/setup-iam.sh) --cluster prod-devseccops-eks-cluster --prefix prod --namespace devseccops --region ap-south-1
+
+
+
+
+  aws s3 cp /Users/manpreetsingh/Documents/devseccops/devseccops-service-configs/terraform/iam/setup-ssm.sh s3://devseccops-assets/setup-ssm.sh
