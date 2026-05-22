@@ -22,10 +22,12 @@ helm repo update
 helm upgrade --install devseccops devseccops/devseccops-stack -n devseccops 
 
 
-helm upgrade --install devseccops devseccops/devseccops-stack -n devseccops --create-namespace devseccops
+ helm upgrade --install devseccops devseccops/devseccops-stack -n devseccops --create-namespace
 
 
-helm install devseccops-stack ./devseccops-stack-*.tgz -n devseccops
+<!-- helm install devseccops-stack ./devseccops-stack-*.tgz -n devseccops -->
+
+helm install devseccops ./devseccops-stack/ -n devseccops
 
 
 terraform apply \

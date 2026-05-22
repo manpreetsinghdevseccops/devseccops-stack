@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:130705418859:certificate/29231324-d2ff-4880-b554-6c0478a839f2
+    alb.ingress.kubernetes.io/group.name: shared-prod-alb
+    alb.ingress.kubernetes.io/healthcheck-path: /auth
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/inbound-cidrs: 0.0.0.0/0
+    alb.ingress.kubernetes.io/ip-address-type: ipv4
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    kubernetes.io/ingress.class: alb
+    meta.helm.sh/release-name: devseccops
+    meta.helm.sh/release-namespace: devseccops
+  creationTimestamp: "2026-05-01T07:36:30Z"
+  deletionGracePeriodSeconds: 0
+  deletionTimestamp: "2026-05-01T09:19:30Z"
+  finalizers:
+  - group.ingress.k8s.aws/shared-prod-alb
+  generation: 2
+  labels:
+    app.kubernetes.io/instance: devseccops
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: devseccops-fe-v2
+    app.kubernetes.io/version: 1.0.0
+    helm.sh/chart: devseccops-fe-v2-0.1.0
+  name: devseccops-devseccops-fe-v2
+  namespace: devseccops
+  resourceVersion: "53382030"
+  uid: 47fc9d78-b206-48f1-93b0-0d6d6434de63
+spec:
+  ingressClassName: alb
+  rules:
+  - host: onestopsolution.devseccops.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: devseccops-devseccops-fe-v2
+            port:
+              number: 80
+        path: /*
+        pathType: ImplementationSpecific
+status:
+  loadBalancer: {}
