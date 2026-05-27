@@ -2,3 +2,5 @@ Chart.lock
 Chart.yaml
 values.yaml
 *.yml
+
+*.md

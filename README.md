@@ -1,3 +1,7 @@
+aws s3 cp /Users/manpreetsingh/Documents/devseccops/devseccops-service-configs/cloud-formation/setup-ssm.sh s3://devseccops-assets/setup-ssm.sh
+
+aws s3 cp /Users/manpreetsingh/Documents/devseccops/devseccops-service-configs/cloud-formation/setup-iam.sh s3://devseccops-assets/setup-iam.sh
+
 # devseccops-stack
 
 
@@ -28,21 +32,3 @@ helm upgrade --install devseccops devseccops/devseccops-stack -n devseccops --cr
 <!-- helm install devseccops-stack ./devseccops-stack-*.tgz -n devseccops -->
 
 helm install devseccops ./devseccops-stack/ -n devseccops
-
-
-terraform apply \
-    -var="aws_account_id=111122223333" \
-    -var="region=us-east-1" \
-    -var="cluster_name=client-eks-cluster" \
-    -var="prefix=clienta" \
-    -var="namespace=clienta-devseccops-namespace"
-
-
-
-
- bash <(curl -fsSL https://devseccops-assets.s3.ap-south-1.amazonaws.com/setup-iam.sh) --cluster prod-devseccops-eks-cluster --prefix prod --namespace devseccops --region ap-south-1
-
-
-
-
-  aws s3 cp /Users/manpreetsingh/Documents/devseccops/devseccops-service-configs/terraform/iam/setup-ssm.sh s3://devseccops-assets/setup-ssm.sh
