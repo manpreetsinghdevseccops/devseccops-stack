@@ -26,6 +26,20 @@ helm repo update
 helm upgrade --install devseccops devseccops/devseccops-stack -n devseccops 
 
 
+
+ helm upgrade --install devseccops devseccops/devseccops-stack \
+    -n devseccops \
+    --set global.domain.frontend="client.example.com" \
+    --set global.domain.backend="client-api.example.com" \
+    --set global.certificateArn="arn:aws:acm:ap-south-1:130705418859:certificate/29231324-d2ff-4880-b554-6c0478a839f2" \
+    --set global.albGroupName="client-prod-alb"
+
+
+
+
+
+
+
 helm upgrade --install devseccops devseccops/devseccops-stack -n devseccops --create-namespace
 
 
