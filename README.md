@@ -10,6 +10,8 @@ helm package devseccops-stack/
 helm repo index . --url https://manpreetsinghdevseccops.github.io/devseccops-stack
 
 
+
+
 git add .
 git commit -m"changes in devsecops-stack package"
 git push origin gh-pages
