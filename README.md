@@ -10,6 +10,7 @@ helm package devseccops-stack/
 helm repo index . --url https://manpreetsinghdevseccops.github.io/devseccops-stack
 
 rm -rf ./devseccops-stack/helm 
+rm -rf ./devseccops-stack/cloud-formation 
 
 
 git add .
